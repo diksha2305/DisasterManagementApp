@@ -7,14 +7,11 @@ import { NeedType, UrgencyLevel, Need } from '@/lib/types';
 import { AlertCircle, Activity, ShieldAlert, Navigation } from 'lucide-react';
 import clsx from 'clsx';
 import { formatDistanceToNow } from 'date-fns';
+import { EmergencyReportFlow } from '@/components/forms/EmergencyReportFlow';
 
 export default function VictimDashboard() {
   const { currentUser, needs, addNeed, volunteers } = useAppStore();
   
-  const [needType, setNeedType] = useState<NeedType>('medical');
-  const [urgency, setUrgency] = useState<UrgencyLevel>('high');
-  const [peopleAffected, setPeopleAffected] = useState(1);
-  const [description, setDescription] = useState('');
   const [panicActive, setPanicActive] = useState(false);
   const [panicCountdown, setPanicCountdown] = useState(5);
   
@@ -54,39 +51,6 @@ export default function VictimDashboard() {
     return () => clearTimeout(timer);
   }, [panicActive, panicCountdown]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!currentUser) return;
-    
-    // Triage scoring logic mock 
-    let score = 0;
-    if (needType === 'medical') score += 40;
-    else if (needType === 'rescue' || needType === 'shelter') score += 35;
-    else score += 20;
-    
-    if (urgency === 'critical') score += 30;
-    else if (urgency === 'high') score += 20;
-
-    const newNeed: Need = {
-      id: `need_${Date.now()}`,
-      reported_by: currentUser.id,
-      need_type: needType as NeedType,
-      urgency_level: score,
-      urgency_label: urgency,
-      people_affected: peopleAffected,
-      description,
-      location: currentUser.location, // In real app, use navigator.geolocation
-      status: 'pending',
-      triage_score: Math.min(score + 10, 100), // Adding small cluster heuristic
-      created_at: new Date().toISOString()
-    };
-
-    addNeed(newNeed);
-    setDescription('');
-    setPeopleAffected(1);
-    alert('Request #'+newNeed.id.slice(-4)+' submitted. Help is coming.');
-  };
-
   return (
     <DashboardLayout role="victim">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full max-w-7xl mx-auto">
@@ -125,73 +89,8 @@ export default function VictimDashboard() {
           </div>
 
           {/* REPORT NEED FORM */}
-          <div className="glass-panel p-6 rounded-2xl">
-            <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-               <Activity size={18} className="text-[#EF9F27]" />
-               Report a Need
-            </h2>
-            
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <div className="grid grid-cols-2 gap-4">
-                <label className="flex flex-col gap-1 text-sm font-semibold text-slate-300">
-                  Type
-                  <select 
-                    value={needType} onChange={(e) => setNeedType(e.target.value as NeedType)}
-                    className="bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-[var(--color-brand-primary)] focus:ring-1 focus:ring-[var(--color-brand-primary)]"
-                  >
-                    <option value="medical">Medical</option>
-                    <option value="food">Food</option>
-                    <option value="water">Water</option>
-                    <option value="shelter">Shelter</option>
-                    <option value="rescue">Rescue</option>
-                    <option value="other">Other</option>
-                  </select>
-                </label>
-
-                <label className="flex flex-col gap-1 text-sm font-semibold text-slate-300">
-                  Urgency
-                  <select 
-                    value={urgency} onChange={(e) => setUrgency(e.target.value as UrgencyLevel)}
-                    className="bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
-                  >
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                    <option value="critical">Critical</option>
-                  </select>
-                </label>
-              </div>
-
-              <label className="flex flex-col gap-1 text-sm font-semibold text-slate-300">
-                People Affected
-                <input 
-                  type="number" min="1" value={peopleAffected} onChange={e => setPeopleAffected(Number(e.target.value))}
-                  className="bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none"
-                />
-              </label>
-
-              <label className="flex flex-col gap-1 text-sm font-semibold text-slate-300">
-                Description
-                <textarea 
-                  rows={2} value={description} onChange={e => setDescription(e.target.value)}
-                  placeholder="Specific details about the situation..."
-                  className="bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none custom-scrollbar resize-none"
-                />
-              </label>
-              
-              <div className="flex items-center gap-2 text-xs text-slate-400 bg-white/5 p-3 rounded-lg border border-white/10">
-                <Navigation size={14} className="text-[#10B981]" />
-                Location will be auto-captured from your device GPS.
-              </div>
-
-              <button 
-                type="submit" 
-                className="mt-2 w-full py-3.5 rounded-xl font-bold bg-white text-black hover:bg-slate-200 transition-colors shadow-lg active:scale-95"
-              >
-                Submit Request
-              </button>
-            </form>
-          </div>
+          {/* MULTI-STEP EMERGENCY FORM */}
+          <EmergencyReportFlow onSuccess={() => {}} />
           
         </div>
 
