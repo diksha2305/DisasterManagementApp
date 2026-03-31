@@ -57,7 +57,7 @@ export interface Need {
 export interface ResourceInventory {
   id: string;
   ngo_id: string;
-  resource_type: 'food' | 'medicine' | 'vehicle' | 'shelter';
+  resource_type: 'food' | 'medicine' | 'vehicle' | 'shelter' | 'water' | 'clothing';
   item_name: string;
   quantity: number;
   unit: string;

@@ -20,7 +20,10 @@ export const MOCK_NGOS: NGO[] = [
 
 export const MOCK_INVENTORY: ResourceInventory[] = [
   { id: 'inv1', ngo_id: 'n1', resource_type: 'food', item_name: 'Rice Bags (5kg)', quantity: 500, unit: 'bags', location: { lat: 26.88, lng: 75.75 }, available: true },
-  { id: 'inv2', ngo_id: 'n1', resource_type: 'medicine', item_name: 'First Aid Kits', quantity: 200, unit: 'kits', location: { lat: 26.88, lng: 75.75 }, available: true }
+  { id: 'inv2', ngo_id: 'n1', resource_type: 'medicine', item_name: 'First Aid Kits', quantity: 200, unit: 'kits', location: { lat: 26.88, lng: 75.75 }, available: true },
+  { id: 'inv3', ngo_id: 'n1', resource_type: 'water', item_name: 'Water Pouches (1L)', quantity: 3000, unit: 'pouches', location: { lat: 26.88, lng: 75.75 }, available: true },
+  { id: 'inv4', ngo_id: 'n1', resource_type: 'shelter', item_name: 'Emergency Tents', quantity: 80, unit: 'tents', location: { lat: 26.88, lng: 75.75 }, available: false },
+  { id: 'inv5', ngo_id: 'n1', resource_type: 'clothing', item_name: 'Blankets', quantity: 650, unit: 'blankets', location: { lat: 26.88, lng: 75.75 }, available: true },
 ];
 
 export const MOCK_SCENARIOS: Scenario[] = [

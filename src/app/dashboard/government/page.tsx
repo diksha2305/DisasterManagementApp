@@ -8,7 +8,6 @@ import { Activity, Shield, Users, Map, AlertTriangle, Send, MoreVertical, X, Set
 import clsx from 'clsx';
 import { formatDistanceToNow } from 'date-fns';
 import { LiveMap } from '@/components/Map';
-import { TriageVolumeChart } from '@/components/dashboard/TriageVolumeChart';
 
 export default function GovernmentDashboard() {
   const { currentUser, needs, volunteers, ngos, inventory, addAnnouncement, updateNeed } = useAppStore();
@@ -223,10 +222,6 @@ export default function GovernmentDashboard() {
                     </div>
                   ))}
                 </div>
-              </div>
-
-              <div className="h-[350px]">
-                 <TriageVolumeChart />
               </div>
 
            </div>
