@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #0F1117;
+  --color-brand-primary: #E24B4A;
+  --color-brand-warning: #EF9F27;
+  --color-brand-success: #10B981;
+  --color-brand-card: rgba(255, 255, 255, 0.05);
+  --color-brand-cardHover: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  background-color: var(--color-brand-bg);
+  color: #F8FAFC; 
+}
+
+/* Glassmorphism utilities */
+.glass-panel {
+  background: var(--color-brand-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.glass-panel-hover:hover {
+  background: var(--color-brand-cardHover);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 10px;
+}
+
+/* Leaflet specifics */
+.leaflet-container {
+  background: #111827 !important;
+  font-family: inherit;
+}
+.leaflet-popup-content-wrapper {
+  background: rgba(15, 17, 23, 0.95);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+}
+.leaflet-popup-tip {
+  background: rgba(15, 17, 23, 0.95);
+}
